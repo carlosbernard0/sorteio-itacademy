@@ -86,7 +86,11 @@ public class Main {
                             numerosInteger[j] = Integer.valueOf(apostas[j]);
                         }
                         Arrays.sort(numerosInteger);
-                        String numerosString = numerosInteger[0] + "," + numerosInteger[1] + "," + numerosInteger[2] + "," + numerosInteger[3] + "," + numerosInteger[4];
+                        String[] numerosStringArray = new String[numerosInteger.length];
+                        for (int i = 0; i < numerosInteger.length; i++) {
+                            numerosStringArray[i] = String.valueOf(numerosInteger[i]);
+                        }
+                        String numerosString = numerosStringArray[0] + "," + numerosStringArray[1] + "," + numerosStringArray[2] + "," + numerosStringArray[3] + "," + numerosStringArray[4];
                         aposta.setNumerosApostados(numerosString);
 
                         deuCerto = true;
@@ -107,7 +111,11 @@ public class Main {
                                         numerosInteger[j] = Integer.valueOf(numerosSeparados[j]);
                                     }
                                     Arrays.sort(numerosInteger);
-                                    String numerosString = numerosInteger[0] + "," + numerosInteger[1] + "," + numerosInteger[2] + "," + numerosInteger[3] + "," + numerosInteger[4];
+                                    String[] numerosStringArray = new String[numerosInteger.length];
+                                    for (int j = 0; j < numerosInteger.length; j++) {
+                                        numerosStringArray[j] = String.valueOf(numerosInteger[j]);
+                                    }
+                                    String numerosString = numerosStringArray[0] + "," + numerosStringArray[1] + "," + numerosStringArray[2] + "," + numerosStringArray[3] + "," + numerosStringArray[4];
                                     aposta.setNumerosApostados(numerosString);
                                     deuCerto = true;
                                 }
@@ -132,7 +140,6 @@ public class Main {
                 case 4:
                     System.out.println("Você deseja realizar o sorteio? Digite 's' para Sim");
                     String opcaoSorteio = input.nextLine();
-
                     while (!opcaoSorteio.equals("s")){
                         System.out.println("Deseja voltar ao menu? Digite 'menu' para voltar ao Menu de opções");
                         opcaoSorteio = input.nextLine();
@@ -144,56 +151,79 @@ public class Main {
                     if (opcaoSorteio.equals("sair")){
                         break;
                     }
+
+                    //inicio do sorteio:
                     SorteioEntity sorteio = new SorteioEntity();
+                    int qntdDeNumerosDoSorteio = 5;
 
                     Random random = new Random();
-                    String[] sorteios = new String[5];
+                    String[] sorteioNumerosSeparadosNoArray = new String[5];
                     for (int i = 0; i < 5; i++) {
                         String umNumeroSorteio = String.valueOf(random.nextInt(50) + 1);
                         for (int j = 0; j < 5; j++) {
-                            if (umNumeroSorteio != sorteios[j]){
-                                sorteios[i] = umNumeroSorteio;
+                            if (umNumeroSorteio != sorteioNumerosSeparadosNoArray[j]){
+                                sorteioNumerosSeparadosNoArray[i] = umNumeroSorteio;
                             }
                         }
 
                     }
-                    Integer[] numerosInteger = new Integer[sorteios.length];
-                    for (int j = 0; j < sorteios.length; j++) {
-                        numerosInteger[j] = Integer.valueOf(sorteios[j]);
+                    Integer[] numerosInteger = new Integer[sorteioNumerosSeparadosNoArray.length];
+                    for (int j = 0; j < sorteioNumerosSeparadosNoArray.length; j++) {
+                        numerosInteger[j] = Integer.valueOf(sorteioNumerosSeparadosNoArray[j]);
                     }
                     Arrays.sort(numerosInteger);
-                    String sorteioNumerosAleatorio = numerosInteger[0] + "," + numerosInteger[1] + "," + numerosInteger[2] + "," + numerosInteger[3] + "," + numerosInteger[4];
+                    String[] numerosStringArray = new String[numerosInteger.length];
+                    for (int j = 0; j < numerosInteger.length; j++) {
+                        numerosStringArray[j] = String.valueOf(numerosInteger[j]);
+                    }
+                    String sorteioNumerosAleatorio = numerosStringArray[0] + "," + numerosStringArray[1] + "," + numerosStringArray[2] + "," + numerosStringArray[3] + "," + numerosStringArray[4];
                     sorteio.setNumerosSorteados(sorteioNumerosAleatorio);
 
 
+                    try{
+                        SorteioEntity sorteioSalvo = sorteioService.salvarSorteio(sorteio);
+                        System.out.println("Sorteio salva, id = "+ sorteioSalvo.getIdSorteio());
+
+                    }catch (Exception e){
+                        System.err.println(e.getMessage());
+                    }
+
+                    //Inicio da apuracao
                     ApuracaoEntity apuracao = new ApuracaoEntity();
                     boolean achouVencedor = false;
                     int qntdDeVezes = 1;
                     while (!achouVencedor || qntdDeVezes == 25){
-                        int quantidadeDeApostasRealizadas = listaDeTodosNumApostadosParaOSorteio.size();
+
+                        int quantidadeDeApostasRealizadas = listaDeTodasAsApostas.size();
                         for (int i = 0; i < quantidadeDeApostasRealizadas; i++) {
-                            String[][] apostaDeCincoNum = new String[5][quantidadeDeApostasRealizadas];
-                            apostaDeCincoNum[i][i] = listaDeTodosNumApostadosParaOSorteio.get(i);
-                            if (apostaDeCincoNum[i][i] == sorteio.getNumerosSorteados()){
+                            String[] apostaDeCincoNum = new String[5];
+                            apostaDeCincoNum[i] = listaDeTodasAsApostas.get(i).getNumerosApostados();
+                            if (apostaDeCincoNum[i] == sorteio.getNumerosSorteados()){
                                 //setando a aposta vencedora noo idAposta da apuracao
                                 ApostaEntity apostaVencedora = listaDeTodasAsApostas.get(i);
                                 apuracao.setAposta(apostaVencedora);
                                 apuracao.setIdAposta(apostaVencedora.getIdAposta());
                                 //setando os numeros das apostas no Atributo apostasVencedoreas da apuracao
-                                apuracao.setApostasVencedoras(apostaDeCincoNum[i][i]);
+                                apuracao.setApostasVencedoras(apostaDeCincoNum[i]);
                                 achouVencedor = true;
                             }else {
                                 apuracao.setAposta(listaDeTodasAsApostas.get(0));
                                 apuracao.setIdAposta(listaDeTodasAsApostas.get(0).getIdAposta());
                                 apuracao.setApostasVencedoras(sorteio.getNumerosSorteados());
                                 System.out.println("Nenhuma aposta conseguiu chegar nos numeros sorteados");
-                                qntdDeVezes++;
-                                if (qntdDeVezes == 25){
-                                    achouVencedor= true;
-                                }
-                                sorteio.setNumerosSorteados(String.valueOf(random.nextInt(50) + 1));
+                                break;
                             }
                         }
+
+                        sorteio.setNumerosSorteados(String.valueOf(random.nextInt(50) + 1));
+                        System.out.println("Nenhuma aposta conseguiu chegar nos numeros sorteados");
+                        qntdDeVezes++;
+                        if (qntdDeVezes == 25){
+                            achouVencedor= true;
+                        }
+
+
+
                     }
 
                     apuracao.setSorteio(sorteio);
@@ -204,8 +234,6 @@ public class Main {
 
 
                     try{
-                        SorteioEntity sorteioSalvo = sorteioService.salvarSorteio(sorteio);
-                        System.out.println("Sorteio salva, id = "+ sorteioSalvo.getIdSorteio());
                         ApuracaoEntity apuracaoSalva = apuracaoService.salvarApuracao(apuracao);
                         System.out.println("Apuracao salva, id = "+ apuracaoSalva.getIdApuracao());
 
@@ -222,5 +250,9 @@ public class Main {
 
             }
         }
+
+
     }
 }
+
+
