@@ -4,26 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94aa0802-6710-4ddf-9614-2601381f5a7d" name="Changes" comment="initial commit">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sorteio.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/entity/ApostaEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/entity/ApuracaoEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/entity/PremioEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/entity/SorteioEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/repository/ApostaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/repository/ApuracaoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/repository/ConexaoDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/repository/PremioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/repository/SorteioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/service/ApostaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/service/ApuracaoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/service/PremioSerivice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/challenge/service/PremioService.java" afterDir="false" />
+    <list default="true" id="94aa0802-6710-4ddf-9614-2601381f5a7d" name="Changes" comment="list and create aposta">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/ApostaEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/ApostaEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/ApuracaoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/ApuracaoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/SorteioEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/SorteioEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/repository/ApostaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/repository/ApostaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/repository/ApuracaoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/repository/ApuracaoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/repository/SorteioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/repository/SorteioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/service/ApostaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/service/ApostaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/service/ApuracaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/service/ApuracaoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/service/PremioSerivice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/service/SorteioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/challenge/view/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/view/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,9 +32,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2doVkz9EooYsYBTbJf1LWHCVBZi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -54,7 +45,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -95,7 +86,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1710674566947</updated>
-      <workItem from="1710674568489" duration="18117000" />
+      <workItem from="1710674568489" duration="18441000" />
+      <workItem from="1710759037639" duration="23361000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -105,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710676199044</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="list and create aposta">
+      <option name="closed" value="true" />
+      <created>1710710432862</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710710432862</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,17 +113,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="list and create aposta" />
+    <option name="LAST_COMMIT_MESSAGE" value="list and create aposta" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/challenge/repository/ApostaRepository.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="sorteios[3]" language="JAVA" />
+        <watch expression="sorteioNumerosAleatorio" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

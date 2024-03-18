@@ -42,4 +42,11 @@ public class ApostaEntity {
         this.cpfApostador = cpfApostador;
     }
 
+    @Override
+    public String toString() {
+        return "idAposta= " + idAposta +
+                ", nomeApostador= " + nomeApostador +
+                ", cpfApostador= " + cpfApostador +
+                ", numerosApostados= " + numerosApostados;
+    }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ApostaService {
 
-    ApostaRepository apostaRepository = new ApostaRepository();
+    ApostaRepository apostaRepository;
 
     public ApostaService(){
         apostaRepository = new ApostaRepository();
@@ -20,7 +20,18 @@ public class ApostaService {
 
     public List<ApostaEntity> listarApostas(){
         List<ApostaEntity> listar = apostaRepository.listarApostas();
-        listar.stream().forEach(System.out::println);
+        for (int i = 0; i < listar.size(); i++) {
+            ApostaEntity aposta = listar.get(i);
+            System.out.print("idAposta= " + aposta.getIdAposta() +
+                    ", nomeApostador= " + aposta.getNomeApostador() +
+                    ", cpfApostador= " + aposta.getCpfApostador() +
+                    ", numerosApostados= " + aposta.getNumerosApostados()+"\n");
+            
+        }
         return listar;
+    }
+
+    public void excluir(){
+        apostaRepository.excluir();
     }
 }

@@ -68,6 +68,8 @@ public class ApostaRepository {
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
 
+
+
             while (res.next()){
                 ApostaEntity aposta = new ApostaEntity();
                 aposta.setIdAposta(res.getInt("id_aposta"));
@@ -92,5 +94,41 @@ public class ApostaRepository {
             }
         }
         return listaApostas;
+    }
+
+    public void excluir(){
+        Connection connection = null;
+        try{
+            connection = ConexaoDB.getConnection();
+
+            String sql = "DROP TABLE APOSTA;";
+            // Cria a string SQL para criar a tabela
+            String sql2= "CREATE TABLE Aposta (\n" +
+                    "  id_aposta NUMBER(38) PRIMARY KEY,\n" +
+                    "  nome_apostador VARCHAR2(50) NULL,\n" +
+                    "  cpf_apostador VARCHAR2(50) NULL,\n" +
+                    "  numeros_apostados VARCHAR2(50) NULL\n" +
+                    ");";
+            Statement statement = connection.createStatement();
+//            statement.executeQuery(sql);
+//            System.out.println("");
+            statement.executeQuery(sql2);
+            System.out.println("Tabela criada");
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            //fechar conexao
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+                ;
+            } catch (SQLException e) {
+                System.out.println("Falha ao fechar a conexao" + e.getMessage());
+            }
+        }
     }
 }
