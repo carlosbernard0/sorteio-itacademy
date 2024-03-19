@@ -1,9 +1,32 @@
 package com.challenge.entity;
 
 
+import java.sql.Array;
+
 public class SorteioEntity  {
     private Integer idSorteio;
     private String numerosSorteados;
+
+    private Integer totalApostas;
+    private String numerosApostas;
+
+    public String getNumerosApostas() {
+        return numerosApostas;
+    }
+
+    public void setNumerosApostas(String numerosApostas) {
+        this.numerosApostas = numerosApostas;
+    }
+
+    public Integer getTotalApostas() {
+        return totalApostas;
+    }
+
+    public void setTotalApostas(Integer totalApostas) {
+        this.totalApostas = totalApostas;
+    }
+
+
 
     public Integer getIdSorteio() {
         return idSorteio;

@@ -23,13 +23,15 @@ public class SorteioRepository {
             }
 
             String sql = " INSERT INTO SORTEIO " +
-                    " (ID_SORTEIO,NUMEROS_SORTEADOS)" +
+                    " (ID_SORTEIO,NUMEROS_SORTEADOS,TOTAL_APOSTAS,NUMEROS_DAS_APOSTAS)" +
                     " VALUES " +
-                    " (?,?) ";
+                    " (?,?,?,?) ";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, proximoId);
             preparedStatement.setString(2, sorteio.getNumerosSorteados());
+            preparedStatement.setInt(3, sorteio.getTotalApostas());
+            preparedStatement.setString(4, sorteio.getNumerosApostas());
 
             int response = preparedStatement.executeUpdate();
             System.out.println("salvarSorteioDB.resposta = " + response);
