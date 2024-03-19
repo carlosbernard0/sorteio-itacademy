@@ -7,8 +7,7 @@ import com.challenge.service.ApostaService;
 import com.challenge.service.ApuracaoService;
 import com.challenge.service.SorteioService;
 
-import java.sql.SQLException;
-import java.sql.SQLOutput;
+
 import java.util.*;
 
 public class Main {
@@ -47,6 +46,8 @@ public class Main {
                     opcao = 0;
                     break;
                 case 1:
+                    System.out.println(listaDeTodosNumApostadosParaOSorteio);
+                    System.out.println(listaDeTodosNumApostadosParaOSorteio.size());
 //                    apostaService.excluir();
                     break;
                 case 2:
@@ -182,7 +183,7 @@ public class Main {
 
                     try{
                         SorteioEntity sorteioSalvo = sorteioService.salvarSorteio(sorteio);
-                        System.out.println("Sorteio salva, id = "+ sorteioSalvo.getIdSorteio());
+                        System.out.println("Sorteio salvo, id = "+ sorteioSalvo.getIdSorteio());
 
                     }catch (Exception e){
                         System.err.println(e.getMessage());
@@ -192,43 +193,76 @@ public class Main {
                     ApuracaoEntity apuracao = new ApuracaoEntity();
                     boolean achouVencedor = false;
                     int qntdDeVezes = 1;
-                    while (!achouVencedor || qntdDeVezes == 25){
+                    while (!achouVencedor){
 
-                        int quantidadeDeApostasRealizadas = listaDeTodasAsApostas.size();
-                        for (int i = 0; i < quantidadeDeApostasRealizadas; i++) {
-                            String[] apostaDeCincoNum = new String[5];
-                            apostaDeCincoNum[i] = listaDeTodasAsApostas.get(i).getNumerosApostados();
-                            if (apostaDeCincoNum[i] == sorteio.getNumerosSorteados()){
-                                //setando a aposta vencedora noo idAposta da apuracao
-                                ApostaEntity apostaVencedora = listaDeTodasAsApostas.get(i);
-                                apuracao.setAposta(apostaVencedora);
-                                apuracao.setIdAposta(apostaVencedora.getIdAposta());
-                                //setando os numeros das apostas no Atributo apostasVencedoreas da apuracao
-                                apuracao.setApostasVencedoras(apostaDeCincoNum[i]);
+
+                        for (int i = 0; i < listaDeTodosNumApostadosParaOSorteio.size(); i++) {
+                            //verificando se o numero da aposta é igual ao numero sorteadoapostada
+                            if(listaDeTodasAsApostas.get(i).getNumerosApostados().equals(sorteio.getNumerosSorteados())){
+                                apuracao.setAposta(listaDeTodasAsApostas.get(i));
+                                apuracao.setIdAposta(listaDeTodasAsApostas.get(i).getIdAposta());
+                                apuracao.setApostasVencedoras(listaDeTodasAsApostas.get(i).getNumerosApostados());
                                 achouVencedor = true;
                             }else {
-                                apuracao.setAposta(listaDeTodasAsApostas.get(0));
-                                apuracao.setIdAposta(listaDeTodasAsApostas.get(0).getIdAposta());
-                                apuracao.setApostasVencedoras(sorteio.getNumerosSorteados());
-                                System.out.println("Nenhuma aposta conseguiu chegar nos numeros sorteados");
-                                break;
+                                while (qntdDeVezes != 25){
+                                    //processo de adicionar mais um numero nos numeros sorteados e ordenar de forma crescente
+                                    List<String> numerosSorteadosStr= new ArrayList<>(List.of(sorteio.getNumerosSorteados().split(",")));
+                                    numerosSorteadosStr.add(String.valueOf(random.nextInt((50)+1)));
+
+                                    Integer[] numerosSorteadosInt = new Integer[numerosSorteadosStr.size()];
+                                    for (int d = 0; d < numerosSorteadosStr.size(); d++) {
+                                        numerosSorteadosInt[d] = Integer.valueOf(numerosSorteadosStr.get(d));
+                                    }
+                                    Arrays.sort(numerosSorteadosInt);
+                                    String[] numerosPorOrdemSorteadosStr = new String[numerosSorteadosInt.length];
+                                    String numFinalDeSorteio= "";
+                                    for (int j = 0; j < numerosSorteadosInt.length; j++) {
+                                        numerosPorOrdemSorteadosStr[j] = String.valueOf(numerosSorteadosInt[j]);
+                                        if (numerosSorteadosInt[j] == numerosSorteadosInt.length-1){
+                                            numFinalDeSorteio += numerosPorOrdemSorteadosStr[j];
+                                        }else {
+                                            numFinalDeSorteio += numerosPorOrdemSorteadosStr[j]+",";
+                                        }
+
+                                    }
+                                    sorteio.setNumerosSorteados(numFinalDeSorteio);
+
+                                    apuracao.setApostasVencedoras(sorteio.getNumerosSorteados());
+
+                                    //ver se os numeros apostados sao iguais aos numeros sorteados
+
+//                                    for (int j = 0; j <5; j++) {
+//                                        if (arrayDosNumerosDasApostas[j].equals(numerosSorteadosInt[j])){
+//                                            String[] arrayParaSalvar =new String[Integer.parseInt(listaDeTodasAsApostas.get(j).getNumerosApostados())];
+//                                            String strParaApuracao= " ";
+//                                            if (arrayParaSalvar[j] == arrayParaSalvar[4]){
+//                                                strParaApuracao = String.valueOf(numerosSorteadosInt[j]);
+//                                            }else {
+//                                                strParaApuracao = numerosSorteadosInt[j]+",";
+//                                            }
+//                                            apuracao.setApostasVencedoras(strParaApuracao);
+//                                            apuracao.setAposta(listaDeTodasAsApostas.get(i));
+//                                            apuracao.setIdAposta(listaDeTodasAsApostas.get(i).getIdAposta());
+//                                            achouVencedor = true;
+//                                        }else {
+//                                            System.out.println("Nao encontramos um vencedor");
+//                                        }
+//                                    }
+
+
+                                    qntdDeVezes++;
+
+                                }
+
                             }
+
                         }
-
-                        sorteio.setNumerosSorteados(String.valueOf(random.nextInt(50) + 1));
-                        System.out.println("Nenhuma aposta conseguiu chegar nos numeros sorteados");
-                        qntdDeVezes++;
-                        if (qntdDeVezes == 25){
-                            achouVencedor= true;
-                        }
-
-
-
                     }
 
+                    //id_sorteio de apuracao
                     apuracao.setSorteio(sorteio);
                     apuracao.setIdSorteio(sorteio.getIdSorteio());
-
+                    //data_realizada
                     Date dataAtual = new Date();
                     apuracao.setDataRealizada(dataAtual);
 
