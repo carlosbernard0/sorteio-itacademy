@@ -2,9 +2,11 @@ package com.challenge.view;
 
 import com.challenge.entity.ApostaEntity;
 import com.challenge.entity.ApuracaoEntity;
+import com.challenge.entity.PremioEntity;
 import com.challenge.entity.SorteioEntity;
 import com.challenge.service.ApostaService;
 import com.challenge.service.ApuracaoService;
+import com.challenge.service.PremioService;
 import com.challenge.service.SorteioService;
 
 
@@ -17,13 +19,18 @@ public class Main {
         ApostaService apostaService = new ApostaService();
         SorteioService sorteioService = new SorteioService();
         ApuracaoService apuracaoService = new ApuracaoService();
+        PremioService premioService = new PremioService();
         List<List<String>> listaDeTodosNumApostadosParaOSorteio = new ArrayList<>();
         List<String> listaDeTodosIdsApostadosParaOSorteio = new ArrayList<>();
         List<ApostaEntity> listaDeTodasAsApostas = new ArrayList<>();
+        List<SorteioEntity>listaDeTodosOsSorteios = new ArrayList<>();
         List<ApuracaoEntity> listaDaApuracao = new ArrayList<>();
         int idDaApuracao =0;
+        int posicaoDaApostaVencedora = -1;
         int quantidadeDeRodadas = 0;
         int opcao = -1;
+        List<Integer> numerosSorteadosParaApuracao = new ArrayList<>();
+        List<String> listaDasApostasVencedorasFinais = new ArrayList<>();
 
         while (opcao != 0){
             System.out.println("""
@@ -178,11 +185,14 @@ public class Main {
                     Integer[] numerosSorteadosInteger = new Integer[sorteioNumerosSeparadosNoArray.length];
                     for (int j = 0; j < sorteioNumerosSeparadosNoArray.length; j++) {
                         numerosSorteadosInteger[j] = Integer.valueOf(sorteioNumerosSeparadosNoArray[j]);
+
                     }
                     Arrays.sort(numerosSorteadosInteger);
                     String[] numerosStringArray = new String[numerosSorteadosInteger.length];
                     for (int j = 0; j < numerosSorteadosInteger.length; j++) {
                         numerosStringArray[j] = String.valueOf(numerosSorteadosInteger[j]);
+                        numerosSorteadosParaApuracao.add(numerosSorteadosInteger[j]);
+
                     }
                     String sorteioNumerosAleatorio = numerosStringArray[0] + "," + numerosStringArray[1] + "," + numerosStringArray[2] + "," + numerosStringArray[3] + "," + numerosStringArray[4];
 //                    sorteio.setNumerosSorteados(sorteioNumerosAleatorio);
@@ -190,6 +200,7 @@ public class Main {
 
                     sorteio.setTotalApostas(listaDeTodosNumApostadosParaOSorteio.size());
                     sorteio.setNumerosApostas(String.valueOf(listaDeTodosNumApostadosParaOSorteio));
+                    listaDeTodosOsSorteios.add(sorteio);
 
                     try{
                         SorteioEntity sorteioSalvo = sorteioService.salvarSorteio(sorteio);
@@ -204,7 +215,6 @@ public class Main {
                     boolean achouVencedor = false;
                     int qntdDeVezes = 1;
                     quantidadeDeRodadas = qntdDeVezes;
-                    int posicaoDaApostaVencedora = -1;
                     List<Integer> numerosSorteadosInt = new ArrayList<>();
 
                     //Usados para separar os numeros do sorteio em inteiro numerosSorteadosInt
@@ -294,7 +304,6 @@ public class Main {
                     }
 
 
-
                     //id_sorteio de apuracao
                     apuracao.setSorteio(sorteio);
                     apuracao.setIdSorteio(sorteio.getIdSorteio());
@@ -304,6 +313,8 @@ public class Main {
 
                     listaDaApuracao.add(apuracao);
                     idDaApuracao++;
+                    listaDasApostasVencedorasFinais.add(apuracao.getApostasVencedoras());
+
 
 
                     try{
@@ -315,24 +326,75 @@ public class Main {
                     }
                     break;
                 case 5:
-                    System.out.println("A) Os numeros sorteados foram: "+ listaDaApuracao.get(idDaApuracao).getApostasVencedoras() );
+                    System.out.println("A) Os numeros sorteados foram: "+ numerosSorteadosParaApuracao);
                     System.out.println("B) A quantidade de rodadas feitas foram: "+ quantidadeDeRodadas);
                     System.out.println("C) A quantidade de apostas vencedoras foi: " +1);
-                    System.out.println("D) Lista das apostas vencedoras: " +listaDaApuracao.get(idDaApuracao).getApostasVencedoras());
-                    System.out.println("E) A lista de todos os números apostados: " );
-//                    System.out.println(lis);
+                    System.out.println("D) Lista das apostas vencedoras: " +listaDasApostasVencedorasFinais);
+                    System.out.println("E) A lista de todos os números apostados: " +listaDeTodosNumApostadosParaOSorteio);
                     System.out.println("Nro apostado    Qtd de apostas");
+
+
+                    System.out.println();
 
 
 
                     break;
                 case 6:
+                    PremioEntity premio = new PremioEntity();
+
+                    premio.setAposta(listaDeTodasAsApostas.get(posicaoDaApostaVencedora));
+                    premio.setIdAposta(listaDeTodasAsApostas.get(posicaoDaApostaVencedora).getIdAposta());
+
+                    int opcaoPremio = 0;
+
+                    while (opcaoPremio == 0){
+                        System.out.println("Parabens ao "+ premio.getAposta().getNomeApostador()+ " voce ganhou o sorteio!!");;
+                        System.out.println("""
+                            Escolha algum dos premios para continuar
+                            1 - 1 ano de academia free
+                            2 - Notebook Dell
+                            3 - Bicicleta Speed
+                            4 - Curso de programação avançado
+                            5 - Viagem para o Exterior
+                            """);
+                        opcaoPremio = input.nextInt();
+                    }
+                    switch (opcaoPremio){
+                        case 1:
+                            premio.setValorPremio(1420);
+                            premio.setNomePremio("1 ano de academia free");
+                            break;
+                        case 2:
+                            premio.setValorPremio(4500);
+                            premio.setNomePremio("Notebook Dell");
+                            break;
+                        case 3:
+                            premio.setValorPremio(2500);
+                            premio.setNomePremio("Bicicleta Speed");
+                            break;
+                        case 4:
+                            premio.setValorPremio(2000);
+                            premio.setNomePremio("Curso de programação avançado");
+                            break;
+                        case 5:
+                            premio.setValorPremio(11000);
+                            premio.setNomePremio("Viagem para o Exterior");
+                            break;
+                    }
+
+                    System.out.println("Legal então você escolheu o premio "+premio.getNomePremio()+" com o valor de " + premio.getValorPremio());
+
+                    try{
+                        PremioEntity premioSalvo = premioService.salvarPremio(premio);
+                        System.out.println("Premio salvo, id = "+ premioSalvo.getIdPremio());
+
+                    }catch (Exception e){
+                        System.err.println(e.getMessage());
+                    }
                     break;
 
             }
         }
-
-
     }
 }
 

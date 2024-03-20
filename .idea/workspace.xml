@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94aa0802-6710-4ddf-9614-2601381f5a7d" name="Changes" comment="atualizacao na tabela sorteio">
+    <list default="true" id="94aa0802-6710-4ddf-9614-2601381f5a7d" name="Changes" comment="ate o 4 resolvido">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/ApostaEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/ApostaEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/SorteioEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/SorteioEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/challenge/repository/ApuracaoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/repository/ApuracaoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/entity/PremioEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/entity/PremioEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/repository/PremioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/repository/PremioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/challenge/service/PremioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/service/PremioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/challenge/view/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/challenge/view/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +87,7 @@
       <workItem from="1710759037639" duration="28597000" />
       <workItem from="1710848191695" duration="17785000" />
       <workItem from="1710887085659" duration="20000" />
-      <workItem from="1710933935255" duration="20292000" />
+      <workItem from="1710933935255" duration="26449000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -137,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710873278894</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ate o 4 resolvido">
+      <option name="closed" value="true" />
+      <created>1710959613223</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710959613223</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +158,8 @@
     <MESSAGE value="tired" />
     <MESSAGE value="nao consegui fazer a parte da apuracao ainda" />
     <MESSAGE value="atualizacao na tabela sorteio" />
-    <option name="LAST_COMMIT_MESSAGE" value="atualizacao na tabela sorteio" />
+    <MESSAGE value="ate o 4 resolvido" />
+    <option name="LAST_COMMIT_MESSAGE" value="ate o 4 resolvido" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
