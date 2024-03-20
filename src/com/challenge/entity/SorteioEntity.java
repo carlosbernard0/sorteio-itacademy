@@ -2,6 +2,7 @@ package com.challenge.entity;
 
 
 import java.sql.Array;
+import java.util.List;
 
 public class SorteioEntity  {
     private Integer idSorteio;

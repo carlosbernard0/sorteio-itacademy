@@ -16,7 +16,7 @@ public class ApuracaoRepository {
             Statement statement = connection.createStatement();
             ResultSet retorno = statement.executeQuery(sqlSequence);
 
-            Integer proximoId = -1;
+            int proximoId = -1;
             if (retorno.next()) {
                 proximoId = retorno.getInt("proxval");
             }

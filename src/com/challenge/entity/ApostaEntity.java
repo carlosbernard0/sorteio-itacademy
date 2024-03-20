@@ -1,5 +1,6 @@
 package com.challenge.entity;
 
+import java.sql.Array;
 import java.util.List;
 
 public class ApostaEntity {
@@ -7,6 +8,9 @@ public class ApostaEntity {
     private String nomeApostador;
     private String cpfApostador;
     private String numerosApostados;
+
+    public ApostaEntity() {
+    }
 
     public String getNumerosApostados() {
         return numerosApostados;

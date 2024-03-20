@@ -21,8 +21,8 @@ public class Main {
         List<String> listaDeTodosIdsApostadosParaOSorteio = new ArrayList<>();
         List<ApostaEntity> listaDeTodasAsApostas = new ArrayList<>();
         List<ApuracaoEntity> listaDaApuracao = new ArrayList<>();
-        int idDaApuracaoFimApuracao = 0;
-
+        int idDaApuracao =0;
+        int quantidadeDeRodadas = 0;
         int opcao = -1;
 
         while (opcao != 0){
@@ -203,24 +203,97 @@ public class Main {
                     ApuracaoEntity apuracao = new ApuracaoEntity();
                     boolean achouVencedor = false;
                     int qntdDeVezes = 1;
-                    while (!achouVencedor || qntdDeVezes == 25){
-                        String listaDeNumerosApostados = sorteio.getNumerosApostas();
-                        String[] numerosApostados = listaDeNumerosApostados.split("[*]");
+                    quantidadeDeRodadas = qntdDeVezes;
+                    int posicaoDaApostaVencedora = -1;
+                    List<Integer> numerosSorteadosInt = new ArrayList<>();
 
+                    //Usados para separar os numeros do sorteio em inteiro numerosSorteadosInt
+                    String[] numerosSorteados = sorteio.getNumerosSorteados().split(",");
+                    for (int i = 0; i < numerosSorteados.length; i++) {
+                        numerosSorteadosInt.add(Integer.valueOf(numerosSorteados[i]));
+                    }
+                    while (!achouVencedor){
 
-                        for (int i = 0; i < numerosApostados.length; i++) {
-                            System.out.println("tamanho da variavel numerosApostados = "+numerosApostados.length);
-                            System.out.println(numerosApostados[i]);
-                            if (Objects.equals(numerosApostados[i], sorteio.getNumerosSorteados())){
-                                System.out.println("deu certo");
-                                achouVencedor= true;
-                            };
-
+                        if (qntdDeVezes != 1){
+                            numerosSorteadosInt.add(random.nextInt(50)+1);
                         }
+                        System.out.println(numerosSorteadosInt);
+                        System.out.println(qntdDeVezes);
+
+                        //Usados para separar a numeros das apostas
+                        String listaDeNumerosApostados = sorteio.getNumerosApostas();
+                        String[] numerosApostadosComColchetes = listaDeNumerosApostados.split("], \\[");
+                        String[] numerosApostadosSemColchetes = new String[5];
+                        List<Integer> listaDosNumerosApostadosEmInt = new ArrayList<>();
+
+
+                        for (int i = 0; i < numerosApostadosComColchetes.length; i++) {
+                           numerosApostadosComColchetes[i] = numerosApostadosComColchetes[i].replace("[", "");
+                           numerosApostadosComColchetes[i] = numerosApostadosComColchetes[i].replace("]", "");
+                           numerosApostadosSemColchetes = numerosApostadosComColchetes[i].split(",");
+                           //variavel numerosApostadosSemColchetes esta com os numeros separados em String
+                            for (int j = 0; j < numerosApostadosSemColchetes.length; j++) {
+                                try {
+                                    listaDosNumerosApostadosEmInt.add(Integer.valueOf(numerosApostadosSemColchetes[j]));
+
+                                }catch (NumberFormatException e){
+                                    System.out.println(e.getMessage());
+                                    System.out.println("Voce precisa colocar algum valor nas apostas");
+                                }
+                            }
+                            for (int k = 0; k < 1; k++) {
+                                Integer[] listaDosUltimosNumerosDasApostas = new Integer[5];
+                                listaDosUltimosNumerosDasApostas[0] = listaDosNumerosApostadosEmInt.get(listaDosNumerosApostadosEmInt.size()-5);
+                                listaDosUltimosNumerosDasApostas[1] = listaDosNumerosApostadosEmInt.get(listaDosNumerosApostadosEmInt.size()-4);
+                                listaDosUltimosNumerosDasApostas[2] = listaDosNumerosApostadosEmInt.get(listaDosNumerosApostadosEmInt.size()-3);
+                                listaDosUltimosNumerosDasApostas[3] = listaDosNumerosApostadosEmInt.get(listaDosNumerosApostadosEmInt.size()-2);
+                                listaDosUltimosNumerosDasApostas[4] = listaDosNumerosApostadosEmInt.get(listaDosNumerosApostadosEmInt.size()-1);
+                                //verifica se os numeros sao iguais
+                                if (qntdDeVezes != 1){
+                                    int achouValores = 0;
+                                    for (int j = 0; j < numerosSorteadosInt.size(); j++) {
+                                        int valoreDaLista = numerosSorteadosInt.get(j);
+                                        if(listaDosUltimosNumerosDasApostas[k]==valoreDaLista){
+                                            achouValores++;
+                                        }
+                                        if (achouValores == 5){
+                                            achouVencedor = true;
+                                            posicaoDaApostaVencedora = i;
+                                            apuracao.setApostasVencedoras(Arrays.toString(listaDosUltimosNumerosDasApostas));
+                                        }
+                                    }
+                                }else {
+                                    if (Objects.equals(listaDosUltimosNumerosDasApostas[k], numerosSorteadosInt.get(k))){
+                                        achouVencedor = true;
+                                        posicaoDaApostaVencedora = i;
+                                        apuracao.setApostasVencedoras(Arrays.toString(listaDosUltimosNumerosDasApostas));
+                                    }
+                                }
+
+                            }
+                        }
+                        System.out.println("Achamos um vencedor: "+achouVencedor);
 
                         qntdDeVezes++;
+                        if (qntdDeVezes == 26){
+                            apuracao.setAposta(listaDeTodasAsApostas.get(0));
+                            apuracao.setApostasVencedoras(sorteio.getNumerosSorteados());
+                            apuracao.setIdAposta(listaDeTodasAsApostas.get(0).getIdAposta());
+                            achouVencedor= true;
+                        }else {
+                            //setando aposta da apuracao
+                            for (int i = 0; i < listaDeTodasAsApostas.size(); i++) {
+                                int posicaoVencedoraDaAposta = posicaoDaApostaVencedora;
+                                if (posicaoVencedoraDaAposta == i){
+                                    apuracao.setAposta(listaDeTodasAsApostas.get(i));
+                                    apuracao.setIdAposta(listaDeTodasAsApostas.get(i).getIdAposta());
+                                }
+                            }
+                        }
 
                     }
+
+
 
                     //id_sorteio de apuracao
                     apuracao.setSorteio(sorteio);
@@ -230,21 +303,26 @@ public class Main {
                     apuracao.setDataRealizada(dataAtual);
 
                     listaDaApuracao.add(apuracao);
+                    idDaApuracao++;
 
 
                     try{
                         ApuracaoEntity apuracaoSalva = apuracaoService.salvarApuracao(apuracao);
-                        idDaApuracaoFimApuracao = apuracaoSalva.getIdApuracao();
                         System.out.println("Apuracao salva, id = "+ apuracaoSalva.getIdApuracao());
 
                     }catch (Exception e){
                         System.err.println(e.getMessage());
                     }
-
-
                     break;
                 case 5:
-                    System.out.println("Os numeros sorteados foram: " + listaDaApuracao.get(idDaApuracaoFimApuracao).getApostasVencedoras());
+                    System.out.println("A) Os numeros sorteados foram: "+ listaDaApuracao.get(idDaApuracao).getApostasVencedoras() );
+                    System.out.println("B) A quantidade de rodadas feitas foram: "+ quantidadeDeRodadas);
+                    System.out.println("C) A quantidade de apostas vencedoras foi: " +1);
+                    System.out.println("D) Lista das apostas vencedoras: " +listaDaApuracao.get(idDaApuracao).getApostasVencedoras());
+                    System.out.println("E) A lista de todos os números apostados: " );
+//                    System.out.println(lis);
+                    System.out.println("Nro apostado    Qtd de apostas");
+
 
 
                     break;
