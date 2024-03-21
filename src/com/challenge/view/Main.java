@@ -195,8 +195,10 @@ public class Main {
 
                     }
                     String sorteioNumerosAleatorio = numerosStringArray[0] + "," + numerosStringArray[1] + "," + numerosStringArray[2] + "," + numerosStringArray[3] + "," + numerosStringArray[4];
-//                    sorteio.setNumerosSorteados(sorteioNumerosAleatorio);
-                    sorteio.setNumerosSorteados("1,2,3,4,5");
+                    sorteio.setNumerosSorteados(sorteioNumerosAleatorio);
+//                    sorteio.setNumerosSorteados("1,2,3,4,5");
+
+
 
                     sorteio.setTotalApostas(listaDeTodosNumApostadosParaOSorteio.size());
                     sorteio.setNumerosApostas(String.valueOf(listaDeTodosNumApostadosParaOSorteio));
